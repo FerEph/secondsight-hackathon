@@ -30,3 +30,11 @@ Day 1 scaffold (Oct 26, 2026): project skeleton, sensor model with mock feed, BL
 ## Safety disclaimer
 
 SecondSight is an advisory awareness aid only. Detection can miss hazards or flag them late, and no output from this app is a safety guarantee. It provides factual readouts only — no health or medical advice, and no riding advice. Riders remain fully responsible for their own awareness and decisions, and must follow local road and distracted-driving rules.
+
+## Caution — safety and regulatory note
+
+Before building VirtuRide, we researched how Canadian ground-transportation law treats displays and devices: the federal Motor Vehicle Safety framework and Transport Canada's driver-assistance guidance, Quebec's Highway Safety Code (sections 443.1 and 443.2), Ontario's Highway Traffic Act (section 78), British Columbia's Motor Vehicle Act (section 214.2), and the other provincial distracted-driving regimes. No Canadian statute regulates head-up displays by name, and no court here has tested a smart-glasses HUD, so we designed conservatively, against the rules that do exist.
+
+VirtuRide is a concept built on one principle: minimal distraction in the service of safety. The HUD is deliberately minimalist — while the rider is moving it shows hazard warnings and speed only, placed peripherally in the normal line of sight, without obstructing the view of the road. It carries no messages, media, social or web content. The full interface is available only when stopped. Audio alerts use open-ear speakers rather than earphones, so the rider keeps full awareness of surrounding traffic sounds. The system is advisory only: it warns, and the rider decides. VirtuRide is designed for cycling and is not intended for use while driving a motor vehicle.
+
+Please treat this as a caution, not a clearance. Parts of the existing law were written for phones and in-vehicle screens — Quebec, for example, frames its screen exception around displays integrated into or mounted on the vehicle — so how a worn display is treated remains an open, untested question, and the rider is responsible for complying with the laws of the jurisdiction they are riding in. Our research informed the design; it is not legal advice, and it is not a claim of certified compliance in any province.
