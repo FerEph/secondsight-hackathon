@@ -4,6 +4,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Ported Nov 2, 2026 from the private build's manifest: coarse location
+         alongside fine, matching the VirtuRide GPS source's permission set. -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:label="SecondSight"
