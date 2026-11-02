@@ -58,7 +58,7 @@ Everything under "works" is verified on real hardware (Ray-Ban Display + Pixel 9
 VirtuRide was designed and field-tested by Ferdinand Ephrem during the event window, and built with Musée and the KOF agent team.
 
 **Links and form fields:**
-- Demo video (approved v9, 141 s): https://drive.google.com/file/d/1GRq4efVObQoeRchmKrmluWpihNbVH7CV/view
+- Demo video (approved v9, 141 s): https://www.youtube.com/watch?v=cbdr_CkdqGI (mirror: https://drive.google.com/file/d/1GRq4efVObQoeRchmKrmluWpihNbVH7CV/view)
 - Public repo: https://github.com/FerEph/secondsight-hackathon
 - X demo post (Most Viral field): https://x.com/kofservicesinc/status/2117247726262145134
 - Try it: the APK reads its Meta Model API key from the app's Settings (a reviewer can supply their own key); with no key or no network, the on-device detection layer runs standalone, and the recorded rides, logs and demo video in the repo show the full Meta AI loop.
