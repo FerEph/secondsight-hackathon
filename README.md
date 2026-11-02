@@ -8,6 +8,8 @@ SecondSight is a modular holding app (the GlassesApp / SecondSight platform). Th
 
 - **VirtuRide — safety HUD mode.** Live hazard detection with audio-first warnings, plus a compact dashboard of factual readouts: speed, elevation, temperature, acceleration, cadence, heart rate (raw beats per minute, shown as a plain readout), ride duration and distance. A voice feature speaks factual status readouts on request — positions, speeds, readings — and nothing else: no advice, no recommendations.
 
+**Ported in on Nov 2:** the VirtuRide ride layer from the development build — GPS tracking, personal Safety Ranges and the ride controller (the `virturide/` package), wired into the app shell with its location-permission gate. Build verified by CI (GitHub Actions, assembleDebug green).
+
 The platform is designed to host further modes. Additional modes are developed in a separate private project; they are not part of this repository or this submission, and may be connected to the platform after the event.
 
 ## Declaration — pre-existing vs built during the event
@@ -23,9 +25,43 @@ The platform is designed to host further modes. Additional modes are developed i
 - **Hazard alerts:** audio-first. Each hazard class maps to a distinct sound pattern, delivered through a small alerter interface so the mapping is unit-testable.
 - **Voice readouts:** a formatter turns the current state into short factual sentences for speech output.
 
-## Status
+## Status — what works, what's next
 
-Day 1 scaffold (Oct 26, 2026): project skeleton, sensor model with mock feed, BLE GATT parsing skeleton for heart rate and cycling speed/cadence, hazard classes with sound patterns, HUD state model, and the factual voice readout formatter. Live DAT display rendering and the Meta Model API layers come next.
+Everything under "works" is verified on real hardware (Ray-Ban Display + Pixel 9 Pro, Oct 28–31, 2026). This project is a proof of concept built for the Meta Global AI Developer Hackathon; the limitations list is deliberately public — it is the roadmap.
+
+### What works today
+
+- Live hazard detection at frame rate with warnings spoken in the glasses; the on-device layer never waits for the network. Proven the hard way on the Oct 31 road ride: for about two minutes every Meta API call failed on DNS, the on-device detection and warnings never stopped, and the debrief completed the moment coverage returned.
+- Muse Spark hazard classification in the loop: in one parking-lot field test, Spark confirmed 3 hazards (correcting 1 on-device label, vehicle → pedestrian) and rejected 4 detections as non-hazards (NONE), suppressing them.
+- Muse Spark debrief after every ride, from aggregate safety numbers only. The Oct 31 road ride's debrief was generated from live ride data minutes after the ride.
+- The traveller's own BLE sensors, direct, no vendor SDK: heart rate with RR intervals → HRV (RMSSD), a fatigue indicator, and VOX, an effort-stability index; Safety Ranges with HUD colour states and spoken limit alerts (verified by deliberately triggering an over-limit state).
+- NAV-lite: spoken turn prompts on OpenStreetMap routes (full street address routed, 15 turns, Oct 29).
+- Ride survival: a glasses-session drop mid-ride auto-finalises the ride and restores it from a snapshot — proven in the field Oct 29; the debrief still generated.
+- Plain-language sensor states and status dots (green only when a sensor is truly delivering its data).
+
+**Known limitations today (honest list):**
+- Announcement discipline in clutter: in a parking lot the on-device labeler fires often (carts, shelf stock, parked cars), and the audio announces detections immediately while Spark's verdict lands seconds later. Spark's NONE verdicts already filter part of it; tuning the coupling is the top post-hackathon enhancement (below).
+- Cadence: the BK8 sensor must be switched to its cadence mode and mounted on the crank arm; wheel data is live today, and crank support is built and waiting on that physical step.
+- The glasses' native video recording and the DAT camera stream are exclusive: filming with the glasses pauses detection for the duration (platform behaviour, observed Oct 31).
+- The DAT session layer can drop mid-ride (platform behaviour, raised in the event's office hours); the watchdog + snapshot restore is the mitigation, not a cure.
+- SpO2 cannot be derived from the current single-wavelength heart-rate band — that needs different hardware.
+
+**After the hackathon (the plan):**
+- Clutter-adaptive announcement discipline: feed classification results (NONE rate, scene density) back into persistence, relevance and audio cooldowns, so busy environments quiet down automatically while real hazards still cut through.
+- An expanded indicator detail view (factual readouts only); VO2 max as a clearly labelled estimate only; wider BLE sensor support.
+- Beta hardening: in-app sensor setup guidance, onboarding, and longer real-road validation.
+
+**Contributors:**
+- Ferdinand Ephrem (KOF Services) — creator. VirtuRide was designed, directed and field-tested by him during the event window (26 Oct – 4 Nov 2026).
+- Musée — programming assistant and senior dev lead, leading a team of agents at KOF Services.
+
+VirtuRide was designed and field-tested by Ferdinand Ephrem during the event window, and built with Musée and the KOF agent team.
+
+**Links and form fields:**
+- Demo video (approved v9, 141 s): https://drive.google.com/file/d/1GRq4efVObQoeRchmKrmluWpihNbVH7CV/view
+- Public repo: https://github.com/FerEph/secondsight-hackathon
+- X demo post (Most Viral field): https://x.com/kofservicesinc/status/2117247726262145134
+- Try it: the APK reads its Meta Model API key from the app's Settings (a reviewer can supply their own key); with no key or no network, the on-device detection layer runs standalone, and the recorded rides, logs and demo video in the repo show the full Meta AI loop.
 
 ## Safety disclaimer
 
